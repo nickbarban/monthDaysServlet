@@ -27,28 +27,26 @@ import javax.servlet.http.HttpServletResponse;
 public class MonthDaysServlet extends HttpServlet {
 	@Override
 	  public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    response.setContentType("text/html"); //Задаем формат ответа - HTML, текст
-	    PrintWriter out = response.getWriter(); //Получаем объект, позволяющий записать контент в ответ 
-	    out.write("<!DOCTYPE html>\n" + // Записываем в ответ HTML код простейшей странички
+	    response.setContentType("text/html"); 
+	    PrintWriter out = response.getWriter(); 
+	    out.write("<!DOCTYPE html>\n" + 
 	       "<html>\n" +
-	       "<head><title>A servlet without templates.</title></head>\n" +
+	       "<head><title>A for counting days for specified month</title></head>\n" +
 	       "<body bgcolor=\"#fdf5e5\">\n" +
-	       "<h1>Note:</h1>\n" +
-	       "<p>This whole page was created via servlet Direct</p>\n"); 
+	       "<h1>Days:</h1>\n"); 
 	    String month = request.getParameter("month");
 	    System.out.println(month);
-	    if (month != null) {
-	    	SimpleDateFormat sdf = new SimpleDateFormat("MMMM", Locale.ENGLISH);
-	    	//System.out.println(sdf.format(new Date()));
+	    if (month != null) { 
+	    	SimpleDateFormat sdf = new SimpleDateFormat("MMMM", Locale.ENGLISH);  
 	    	Calendar calendar = Calendar.getInstance();
 	    	try {
 				calendar.setTime(sdf.parse(month));
-		    	int days = calendar.getMaximum(Calendar.DAY_OF_MONTH);
+		    	int days = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 		    	System.out.println(calendar.get(Calendar.MONTH) + "||" + days);
-		    	out.write("<h1>"+ days + "</h1>\n");
+		    	out.write("<p>"+ days + "</p>\n");
 			} catch (ParseException e) {
-				out.write("<h1>WRONG MONTH'S NAME</h1>\n");
-				//e.printStackTrace();
+				out.write("<p>WRONG MONTH'S NAME</p>\n");
+				
 			}
 	    	
 	    }
